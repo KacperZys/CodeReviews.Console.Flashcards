@@ -4,18 +4,15 @@ using Spectre.Console;
 namespace Flashcards.KacperZys.Controller;
 internal class MainMenuController
 {
+    MainMenuModel menuModel = new();
+
     public void ManageStacks()
     {
 
         //TODO: Display Stacks from database ans save to list
-        List<StackDTO> stacks = new();
+        List<StackDTO> stacks = menuModel.GetStacks();
         StackDTO input = AnsiConsole.Ask<StackDTO>("Enter name of the stack you want to manage. Input exit to leave.");
-
-    }
-
-    private void CreateStack()
-    {
-
+        // Let user manage their stacks with another menu aka add, delete, change
 
     }
 

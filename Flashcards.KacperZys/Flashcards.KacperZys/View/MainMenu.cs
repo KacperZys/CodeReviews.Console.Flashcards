@@ -8,9 +8,9 @@ internal static class MainMenu
     {
         MainMenuController mainMenuController = new();
 
-        var options = Enum.GetValues<Option>();
+        var options = Enum.GetValues<Options>();
         List<string> optionsString = new();
-        foreach (Option option in options)
+        foreach (Options option in options)
         {
             optionsString.Add(option.ToString().Replace('_', ' '));
         }
@@ -20,33 +20,36 @@ internal static class MainMenu
             .Title("Menu options.")
             .AddChoices(optionsString));
 
-        switch (Enum.Parse<Option>(selection.Replace(' ', '_')))
+        switch (Enum.Parse<Options>(selection.Replace(' ', '_')))
         {
-            case Option.Manage_Stacks:
-                mainMenuController.ManageStacks();
+            case Options.Manage_Stacks:
+                StacksMenu stacksMenu = new();
+                stacksMenu.Display();
                 break;
-            case Option.Manage_Flashcards:
-                mainMenuController.ManageFlashcards();
+            case Options.Manage_Flashcards:
+                FlashcardsMenu flashcardsMenu = new();
+                flashcardsMenu.Display();
                 break;
-            case Option.Study:
-                mainMenuController.Study();
+            case Options.Study:
+                StudyMenu studyMenu = new();
+                studyMenu.Display();
                 break;
-            case Option.View_Study_Session_Data:
+            case Options.View_Study_Session_Data:
                 mainMenuController.ViewStudySessionData();
                 break;
-            case Option.Exit:
+            case Options.Exit:
                 return;
             default:
                 throw new Exception("Something went wrong. Please try again.");
         }
     }
-}
 
-public enum Option
-{
-    Manage_Stacks,
-    Manage_Flashcards,
-    Study,
-    View_Study_Session_Data,
-    Exit
+    private enum Options
+    {
+        Manage_Stacks,
+        Manage_Flashcards,
+        Study,
+        View_Study_Session_Data,
+        Exit
+    }
 }
