@@ -5,21 +5,22 @@ internal class StacksMenu
 {
     internal void Display()
     {
+        StacksController stacksController = new();
         Options selection = SharedMenuOptionsController.SetMenuOptions<Options>();
 
         switch (selection)
         {
             case Options.Display_Stacks:
-
+                stacksController.DisplayStacks();
                 break;
             case Options.Create_Stack:
-
+                stacksController.Create();
                 break;
             case Options.Modify_Stack:
-
+                stacksController.Modify();
                 break;
             case Options.Delete_Stack:
-
+                stacksController.Delete();
                 break;
             case Options.Exit:
                 return;
