@@ -17,10 +17,26 @@ internal class StacksModel
         connection.Execute(query, stack);
     }
 
+    internal bool Exists(StackDTO stack)
+    {
+        var connection = DatabaseConnection.Connect();
+        string query = "SELECT Name FROM Stack WHERE Name = @Name";
+        var names = connection.Query<string>(query, stack);
+
+        return names.Any();
+    }
+
     internal List<StackDTO> GetAllStacks()
     {
         var connection = DatabaseConnection.Connect();
         string query = "SELECT * FROM Stack;";
         return connection.Query<StackDTO>(query, new StackDTO()).ToList();
+    }
+
+    internal void Modify(StackDTO stack, string oldName)
+    {
+        var connection = DatabaseConnection.Connect();
+        string query = $"UPDATE Stack SET Name = @Name WHERE Name = '{oldName}';";
+        connection.Execute(query, stack);
     }
 }

@@ -15,10 +15,17 @@ internal class StacksController
     internal void Delete()
     {
         string stackName = AnsiConsole.Ask<string>("Enter name of the stack to delete:");
-        // TODO: Check if stack exists
-        bool toDelete = AnsiConsole.Confirm($"Are you sure you want to delete {stackName}?");
+        bool stackExists = stacksModel.Exists(new StackDTO { Name = stackName });
 
-        if (toDelete)
+        if (!stackExists)
+        {
+            AnsiConsole.MarkupLine("[red]There's no stack with that name! Please try again.[/]");
+            return;
+        }
+
+        bool deleteCheck = AnsiConsole.Confirm($"Are you sure you want to delete {stackName}?");
+
+        if (deleteCheck)
             stacksModel.Delete(new StackDTO { Name = stackName });
     }
 
@@ -38,6 +45,17 @@ internal class StacksController
 
     internal void Modify()
     {
-        throw new NotImplementedException();
+        string stackName = AnsiConsole.Ask<string>("Enter name of the stack to modify:");
+        bool stackExists = stacksModel.Exists(new StackDTO { Name = stackName });
+
+        if (!stackExists)
+        {
+            AnsiConsole.MarkupLine("[red]There's no stack with that name! Please try again.[/]");
+            return;
+        }
+
+        string newName = AnsiConsole.Ask<string>("Enter new name for stack:");
+        stacksModel.Modify(new StackDTO { Name = newName }, stackName);
+        AnsiConsole.MarkupLine("[red]New name has been set[/]");
     }
 }
