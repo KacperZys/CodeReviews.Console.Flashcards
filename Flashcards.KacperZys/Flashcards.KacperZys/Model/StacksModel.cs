@@ -26,12 +26,7 @@ internal class StacksModel
         return names.Any();
     }
 
-    internal List<StackDTO> GetAllStacks()
-    {
-        var connection = DatabaseConnection.Connect();
-        string query = "SELECT * FROM Stack;";
-        return connection.Query<StackDTO>(query, new StackDTO()).ToList();
-    }
+
 
     internal void Modify(StackDTO stack, string oldName)
     {

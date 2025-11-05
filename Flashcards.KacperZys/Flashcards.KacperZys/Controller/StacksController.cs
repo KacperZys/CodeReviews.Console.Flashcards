@@ -29,9 +29,9 @@ internal class StacksController
             stacksModel.Delete(new StackDTO { Name = stackName });
     }
 
-    internal void DisplayStacks()
+    internal void Display()
     {
-        List<StackDTO> stacks = stacksModel.GetAllStacks();
+        List<StackDTO> stacks = SharedOptionsModel.GetAllStacks();
         Table table = new();
         table.AddColumn("Name");
 

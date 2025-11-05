@@ -11,7 +11,7 @@ internal class StacksMenu
         switch (selection)
         {
             case Options.Display_Stacks:
-                stacksController.DisplayStacks();
+                stacksController.Display();
                 break;
             case Options.Create_Stack:
                 stacksController.Create();
