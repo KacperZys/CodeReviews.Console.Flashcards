@@ -5,7 +5,7 @@ namespace Flashcards.KacperZys.Controller;
 internal class FlashcardsController
 {
     FlashcardsModel flashcardsModel = new();
-    private static StackDTO? CurrentStack { get; set; }
+    private static Stack? CurrentStack { get; set; }
 
     internal void Create()
     {
@@ -13,6 +13,7 @@ internal class FlashcardsController
         string backText = AnsiConsole.Ask<string>("[green]Please provide back of the flashcard: [/]");
 
         flashcardsModel.Create(new FlashcardDTO() { Front = frontText, Back = backText });
+        AnsiConsole.MarkupLine("[green]New card has been added![/]");
     }
 
     internal void Delete()
@@ -22,7 +23,17 @@ internal class FlashcardsController
 
     internal void Display()
     {
-        flashcardsModel.GetAllFlashcards();
+        List<FlashcardDTO> flashcards = flashcardsModel.GetAllFlashcards();
+        Table table = new();
+        table.ShowRowSeparators();
+        table.AddColumns("Front", "Back");
+
+        foreach (FlashcardDTO flashcard in flashcards)
+        {
+            table.AddRow(flashcard.Front, flashcard.Back);
+        }
+
+        AnsiConsole.Write(table);
     }
 
     internal void Modify()
@@ -30,7 +41,7 @@ internal class FlashcardsController
         throw new NotImplementedException();
     }
 
-    public static StackDTO GetCurrentStack()
+    public static Stack GetCurrentStack()
     {
         if (CurrentStack == null)
         {
@@ -53,7 +64,7 @@ internal class FlashcardsController
             new SelectionPrompt<string>()
             .Title("Select Stack")
             .AddChoices(stacksNames));
-        CurrentStack = new StackDTO { Name = selection };
-        AnsiConsole.MarkupLine($"You have chosed {selection}");
+
+        CurrentStack = SharedOptionsModel.GetStackByName(selection);
     }
 }

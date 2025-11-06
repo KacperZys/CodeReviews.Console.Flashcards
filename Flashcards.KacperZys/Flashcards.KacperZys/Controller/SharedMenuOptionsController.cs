@@ -3,8 +3,6 @@
 namespace Flashcards.KacperZys.Controller;
 internal static class SharedMenuOptionsController
 {
-
-
     public static T SetMenuOptions<T>() where T : struct, Enum
     {
         var options = Enum.GetValues(typeof(T));
@@ -22,6 +20,4 @@ internal static class SharedMenuOptionsController
 
         return Enum.Parse<T>(selection.Replace(' ', '_'));
     }
-
-
 }

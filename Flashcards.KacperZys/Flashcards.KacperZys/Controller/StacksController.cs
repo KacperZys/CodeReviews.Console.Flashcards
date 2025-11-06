@@ -33,6 +33,7 @@ internal class StacksController
     {
         List<StackDTO> stacks = SharedOptionsModel.GetAllStacks();
         Table table = new();
+        table.ShowRowSeparators();
         table.AddColumn("Name");
 
         for (int i = 0; i < stacks.Count; i++)

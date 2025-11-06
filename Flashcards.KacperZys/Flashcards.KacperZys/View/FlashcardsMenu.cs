@@ -1,17 +1,20 @@
 ﻿using Flashcards.KacperZys.Controller;
+using Spectre.Console;
 
 namespace Flashcards.KacperZys.View;
 internal class FlashcardsMenu
 {
     internal void Display()
     {
-        Options selection = SharedMenuOptionsController.SetMenuOptions<Options>();
         FlashcardsController flashcardsController = new();
+        var stack = FlashcardsController.GetCurrentStack();
+        AnsiConsole.MarkupLine($"[yellow]Current stack: {stack.Name}[/]");
+        Options selection = SharedMenuOptionsController.SetMenuOptions<Options>();
 
         switch (selection)
         {
-            case Options.Current_Stack:
-                FlashcardsController.GetCurrentStack();
+            case Options.Change_Current_Stack:
+                FlashcardsController.SetCurrentStack();
                 break;
             case Options.Display_Flashcards:
                 flashcardsController.Display();
@@ -34,11 +37,11 @@ internal class FlashcardsMenu
 
     private enum Options
     {
+        Change_Current_Stack,
         Display_Flashcards,
         Create_Flashcard,
         Modify_Flashcard,
         Delete_Flashcard,
-        Current_Stack,
         Exit
     }
 }
